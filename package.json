@@ -1,0 +1,13 @@
+{
+  "name": "jobs-browser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "docker:prod": "docker compose -f docker-compose.yaml up -d --build",
+    "docker:dev": "docker compose -f docker-compose.dev.yaml up -d --build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  api:
+    build:
+      dockerfile: dockerfile
+      context: ./server
+      target: dev
+    volumes:
+      - ./server/src:/app/src:ro
+    ports:
+      - '5001:5000'
+  client:
+    build:
+      dockerfile: dockerfile
+      context: ./client
+      target: dev
+    volumes:
+      - ./client/src:/app/src:ro
+      - ./client/public:/app/public:ro
+      - ./client/index.html:/app/index.html:ro
+    ports:
+      - '3005:3000'
