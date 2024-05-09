@@ -2,9 +2,9 @@
 
 Backend for a jobs board website. All of the functionality below will be fully implemented in this project.
 
-### Job Postings
+### Jobs
 
-- List all job Postings in the database
+- List all Jobs in the database
   - Pagination
   - Select specific fields in result
   - Limit number of results
@@ -19,33 +19,13 @@ Backend for a jobs board website. All of the functionality below will be fully i
 - Update job Posting
   - Owner only
   - Validation on update
-- Delete job ad
+- Delete job post
   - Owner only
-
-### Companies
-
-- Only one company per employer (admins can create more)
-- List all jobs for company
-- List all companies in general
-  - Pagination, filtering, etc
-- Get single company
-- Create new company
-  - Authenticated users only
-  - Must have the role "employer" or "admin"
-  - Only the owner or an admin can create a job ad for a company
-  - employers can create multiple job ads
-- Update company
-  - Owner only
-- Delete company
-  - Owner only
-- Calculate the average rating from the reviews for a company
-- Upload a photo for company
-  - Owner only
-  - Photo will be uploaded to local filesystem
+- Link employers associated with the job post
 
 ### Job Applications
 
-- Allow users to apply for a job posting by submitting their
+- Allow users to apply for a job posting by submitting/uploading their
   application details, such as a cover letter, resume/CV, and any additional information required by the employer.
   - Authenticated users only
 - Implement validation to ensure that required fields are provided and that file uploads (e.g., resume/CV)
@@ -57,13 +37,12 @@ Backend for a jobs board website. All of the functionality below will be fully i
 
 ### Reviews
 
-- List all reviews for a company
-- List all reviews in general
+- List all reviews for an employer
   - Pagination, filtering, etc
 - Get a single review
 - Create a review
   - Authenticated users only
-  - Must have the role "user" or "admin" (no publishers)
+  - Must have the role "user" or "admin" (not employer)
 - Update review
   - Owner only
 - Delete review
@@ -74,7 +53,7 @@ Backend for a jobs board website. All of the functionality below will be fully i
 - Authentication will be using JWT/cookies
   - JWT and cookie should expire in 30 days
 - User registration
-  - Register as a "user" or "publisher"
+  - Register as a "user" or "employer"
   - Once registered, a token will be sent along with a cookie (token = xxx)
   - Passwords must be hashed
 - User login
@@ -96,6 +75,11 @@ Backend for a jobs board website. All of the functionality below will be fully i
 - User CRUD
   - Admin only
 - Users can only be made admin by updating the database field manually
+- Users can bookmark or save job listings that they are interested in for later viewing.
+  - Authenticated user only
+  - Must have the role "user" (not employer)
+- Display a history of job listings that the user has applied for, along with the current status of their applications.
+- Integrate a messaging system that allows users to communicate with each other, such as sending direct messages or inquiries about job opportunities.
 
 ## Security
 

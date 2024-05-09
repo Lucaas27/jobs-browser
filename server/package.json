@@ -4,19 +4,24 @@
   "description": "",
   "main": "dist/app.js",
   "scripts": {
-    "dev": "npx tsc --noEmit && tsx watch -r dotenv/config --no-warnings src/app.ts ",
-    "start": "NODE_ENV=production node dist/app.js",
-    "build": "npx tsc",
+    "dev": "npx tsc --noEmit && NODE_ENV=development tsx watch -r dotenv/config --no-warnings src/index.ts ",
+    "start": "NODE_ENV=production node dist/index.js",
+    "build": "npx tsc && tsc-alias",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Lucas Gomes",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.6.8",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "morgan": "^1.10.0",
+    "tsconfig-paths": "^4.2.0",
+    "winston": "^3.13.0",
+    "winston-daily-rotate-file": "^5.0.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
+    "@types/morgan": "^1.9.9",
     "@types/node": "^20.12.8",
     "dotenv": "^16.4.5",
     "tsx": "^4.9.0",
