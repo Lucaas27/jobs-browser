@@ -14,10 +14,10 @@ const morganMiddleware = () => {
     // Use the http severity
     write: (message: string) => logger.http(message),
   };
-  // const skip = () => {
-  //   const env = process.env.NODE_ENV || 'development';
-  //   return env !== 'development';
-  // };
+  const skip = () => {
+    const env = process.env.NODE_ENV || 'development';
+    return env !== 'development';
+  };
 
   morgan.token('body', (req: Request) => {
     return JSON.stringify(redactSensitiveInfo(req.body));
@@ -48,9 +48,9 @@ const morganMiddleware = () => {
       2
     ),
     // Options: in this case, I overwrote the stream and the skip logic.
-    // Skip if the environment is not development.
+    // Skip logging if the environment is not development.
     // Otherwise, log the whole request to the console
-    { stream /*, skip */ }
+    { stream, skip }
   );
 };
 export { morganMiddleware };
