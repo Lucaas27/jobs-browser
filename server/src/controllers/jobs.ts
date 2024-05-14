@@ -13,7 +13,12 @@ import { Job } from '@/models/jobs';
  * @access Public
  */
 export const getJobs = async (req: Request, res: Response<APIResponse>): Promise<Response<APIResponse>> => {
-  return res.status(200).json({ success: true, message: 'Get all jobs' });
+  try {
+    const jobs = await Job.find();
+    return res.status(200).json({ success: true, message: 'All jobs retrieved', count: jobs.length, data: jobs });
+  } catch (err: unknown) {
+    return res.status(400).json({ success: false, message: 'Failed to get jobs', error: (err as Error).message });
+  }
 };
 
 /**
@@ -26,7 +31,17 @@ export const getJobs = async (req: Request, res: Response<APIResponse>): Promise
  * @access Public
  */
 export const getJob = async (req: Request, res: Response<APIResponse>): Promise<Response<APIResponse>> => {
-  return res.status(200).json({ success: true, message: 'Get single job' });
+  try {
+    const job = await Job.findById(req.params.id);
+
+    if (!job) {
+      return res.status(404).json({ success: false, message: 'Job not found', data: null });
+    }
+
+    return res.status(200).json({ success: true, message: 'Job retrieved', data: job });
+  } catch (err: unknown) {
+    return res.status(400).json({ success: false, message: 'Failed to get job', error: (err as Error).message });
+  }
 };
 
 /**
@@ -42,8 +57,8 @@ export const createJob = async (req: Request, res: Response<APIResponse>): Promi
   try {
     const jobCreated = await Job.create(req.body);
     return res.status(201).json({ success: true, message: 'Created a new job', data: { _id: jobCreated.id } });
-  } catch (err) {
-    return res.status(400).json({ success: false, message: 'Failed to create a new job', error: err.message });
+  } catch (err: unknown) {
+    return res.status(400).json({ success: false, message: 'Failed to create a new job', error: (err as Error).message });
   }
 };
 
@@ -57,7 +72,15 @@ export const createJob = async (req: Request, res: Response<APIResponse>): Promi
  * @access Private
  */
 export const updateJob = async (req: Request, res: Response<APIResponse>): Promise<Response<APIResponse>> => {
-  return res.status(200).json({ success: true, message: 'Update job' });
+  try {
+    const updatedJob = await Job.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+    if (!updatedJob) {
+      return res.status(404).json({ success: false, message: 'Job not found', data: null });
+    }
+    return res.status(200).json({ success: true, message: 'Updated job', data: updatedJob });
+  } catch (err: unknown) {
+    return res.status(400).json({ success: false, message: 'Failed to update job', error: (err as Error).message });
+  }
 };
 
 /**
@@ -70,7 +93,15 @@ export const updateJob = async (req: Request, res: Response<APIResponse>): Promi
  * @access Private
  */
 export const deleteJob = async (req: Request, res: Response<APIResponse>): Promise<Response<APIResponse>> => {
-  return res.status(204).json({ success: true, message: 'Delete job' });
+  try {
+    const deletedJob = await Job.findByIdAndDelete(req.params.id);
+    if (!deletedJob) {
+      return res.status(404).json({ success: false, message: 'Job not found', data: null });
+    }
+    return res.status(200).json({ success: true, message: 'Deleted job', data: deletedJob.id });
+  } catch (err: unknown) {
+    return res.status(400).json({ success: false, message: 'Failed to delete job', error: (err as Error).message });
+  }
 };
 
 /**

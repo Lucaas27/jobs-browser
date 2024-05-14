@@ -1,6 +1,5 @@
 [
   {
-    "_id": "d5720a77-7d34-41fb-95d4-23f514cbcb52",
     "user": "0eaf7c91-8e48-4a48-9be9-2f4e6fbb335f",
     "title": "Software Engineer",
     "description": "We are looking for a talented Software Engineer to join our team.",
@@ -26,7 +25,6 @@
     "deadline": "2024-05-16T11:30:00Z"
   },
   {
-    "_id": "b1e44cf6-6a6e-4291-bd58-937e28e9ad82",
     "user": "56f7a12f-858b-49f1-a5f5-b3b26eb07830",
     "title": "Marketing Manager",
     "description": "We are hiring a Marketing Manager to lead our marketing efforts.",
@@ -52,7 +50,6 @@
     "deadline": "2024-05-23T11:30:00Z"
   },
   {
-    "_id": "44cfc4d7-4fe2-42e7-a7cb-98aa4e7354bf",
     "user": "bc64bc7a-10b3-4c62-a0b3-114c2ee779a6",
     "title": "Data Analyst",
     "description": "We are seeking a skilled Data Analyst to join our dynamic team.",
@@ -78,7 +75,6 @@
     "deadline": "2024-05-21T11:30:00Z"
   },
   {
-    "_id": "823ad426-3307-4a85-a5a5-6fc8aa5d9b2a",
     "user": "3ec39bf4-5c92-4a94-8f12-4bda894b2e14",
     "title": "Graphic Designer",
     "description": "We're looking for a creative Graphic Designer to join our team and bring fresh ideas to our projects.",
@@ -104,7 +100,6 @@
     "deadline": "2024-05-14T11:30:00Z"
   },
   {
-    "_id": "abfe8b9a-3a58-4b2d-b65c-eb7a6055f5de",
     "user": "fd68e9fc-3ec3-4c43-9058-53e0c2b64938",
     "title": "Data Scientist",
     "description": "We're seeking a talented Data Scientist to analyze large datasets and provide valuable insights.",
@@ -130,7 +125,6 @@
     "deadline": "2024-05-23T11:30:00Z"
   },
   {
-    "_id": "f1f11fa2-1001-4921-b834-5f82e972207d",
     "user": "84e91b10-4c72-4650-85b2-b86f77772b2e",
     "title": "Customer Service Representative",
     "description": "We're hiring Customer Service Representatives to assist our customers with their inquiries and complaints.",
@@ -156,7 +150,6 @@
     "deadline": "2024-05-21T11:30:00Z"
   },
   {
-    "_id": "c1f2e43d-1d3c-49c8-bbb3-1dfc2b6d930b",
     "user": "fcf75e5b-9d0c-4d32-94b5-3762a4e0841b",
     "title": "Project Manager",
     "description": "We are seeking a Project Manager to lead our team in delivering projects on time and within budget.",
@@ -182,7 +175,6 @@
     "deadline": "2024-05-16T11:30:00Z"
   },
   {
-    "_id": "a789dd70-3ad7-4e9f-bc07-4647be8c6825",
     "user": "fde01156-3f7a-45d0-b53b-4b10562a773b",
     "title": "Accountant",
     "description": "We are seeking a qualified Accountant to handle prepare, compute, manage, research and analyze all accounting data, in order to provide quantitative information on performance, financial position, solvency, liquidity and cash flows of our business.",
@@ -208,7 +200,6 @@
     "deadline": "2024-05-23T11:30:00Z"
   },
   {
-    "_id": "6d88dfbc-fccf-4f10-822f-34dc480384b1",
     "user": "a0d0978e-0134-4ad1-a181-7abff6c42d12",
     "title": "Nurse",
     "description": "We are looking for a qualified Nurse to promote and restore patients’ health.",
@@ -234,7 +225,6 @@
     "deadline": "2024-05-23T11:30:00Z"
   },
   {
-    "_id": "a0f1cf35-40c0-45e2-9cf4-d5cc2301d77e",
     "user": "c8abff44-6b4f-4b18-92a2-34e3f64cfa72",
     "title": "Executive Assistant",
     "description": "We are looking for a responsible Executive Assistant to perform clerical tasks in a well-organised and timely way.",
@@ -260,7 +250,6 @@
     "deadline": "2024-05-16T11:30:00Z"
   },
   {
-    "_id": "c26ae4a8-7b07-46d7-9885-409e5e609b9e",
     "user": "e1c7dbde-7348-4c86-aa91-20547825c1dc",
     "title": "Mechanical Engineer",
     "description": "We are seeking a skilled Mechanical Engineer to design and oversee the manufacturing of products.",
@@ -286,7 +275,6 @@
     "deadline": "2024-05-21T11:30:00Z"
   },
   {
-    "_id": "3f674971-98e4-47cf-83d3-18d03e073956",
     "user": "be9f651f-aa53-4190-bf44-85cbb36fe89d",
     "title": "Customer Success Manager",
     "description": "We are seeking a Customer Success Manager to manage customer relationships and drive customer satisfaction.",
