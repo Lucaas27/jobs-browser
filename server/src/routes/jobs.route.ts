@@ -1,6 +1,5 @@
-import { Router, Request, Response } from 'express';
-import { APIResponse } from '@/interfaces/APIResponse';
-import { getJobs, getJob, createJob, updateJob, deleteJob, getJobsInRadius, applyForJob } from '@/controllers/jobs';
+import { Router } from 'express';
+import { getJobs, getJob, createJob, updateJob, deleteJob, getJobsInRadius, applyForJob } from '@/controllers/jobs.controller';
 
 const jobsRouter = Router();
 

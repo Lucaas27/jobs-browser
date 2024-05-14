@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import slugify from 'slugify';
 import validator from 'validator';
 
 const jobSchema = new mongoose.Schema(
@@ -109,5 +110,12 @@ const jobSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+// Pre-save middleware
+// Slugify job title before saving to DB
+jobSchema.pre('save', function (this: any, next) {
+  this.slug = slugify(this.title, { lower: true });
+  next();
+});
 
 export const Job = mongoose.model('Job', jobSchema);
