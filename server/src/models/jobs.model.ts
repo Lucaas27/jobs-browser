@@ -1,3 +1,4 @@
+import { geocoder } from '@/utils/geocoder';
 import mongoose from 'mongoose';
 import slugify from 'slugify';
 import validator from 'validator';
@@ -34,11 +35,14 @@ const jobSchema = new mongoose.Schema(
         type: [Number],
         index: '2dsphere',
       },
+      streetNumber: String,
+      street: String,
       formattedAddress: String,
       city: String,
       state: String,
       postcode: String,
       country: String,
+      countryCode: String,
     },
     company: {
       type: String,
@@ -115,6 +119,26 @@ const jobSchema = new mongoose.Schema(
 // Slugify job title before saving to DB
 jobSchema.pre('save', function (this: any, next) {
   this.slug = slugify(this.title, { lower: true });
+  next();
+});
+
+jobSchema.pre('save', async function (this: any, next) {
+  const location = await geocoder.geocode(this.address);
+  this.location = {
+    type: 'Point',
+    coordinates: [location[0].longitude, location[0].latitude],
+    streetNumber: location[0].streetNumber,
+    street: location[0].streetName,
+    formattedAddress: location[0].formattedAddress,
+    city: location[0].city,
+    state: location[0].state,
+    postcode: location[0].zipcode,
+    country: location[0].country,
+    countryCode: location[0].countryCode,
+  };
+
+  // Don't save address provided by the user in DB - it's not necessary
+  this.address = undefined;
   next();
 });
 
