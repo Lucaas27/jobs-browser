@@ -29,25 +29,14 @@
     "title": "Marketing Manager",
     "description": "We are hiring a Marketing Manager to lead our marketing efforts.",
     "email": "jobs@example.com",
-    "address": "456 Oak St, City, Country",
-    "location": {
-      "type": "Point",
-      "coordinates": [53.5, 2.2],
-      "formattedAddress": "456 Oak St, City, Country",
-      "city": "City",
-      "state": "State",
-      "postcode": "54321",
-      "country": "Country"
-    },
+    "address": "81 Highfield Road, Bristol, BS13 5NG",
     "company": "Marketing Pro Ltd.",
     "industry": ["Marketing"],
     "jobType": "Part-time",
     "minEducation": "Bachelor's Degree",
     "positionsAvailable": 1,
     "experience": "5 Years+",
-    "salary": 90000,
-    "createdAt": "2024-05-09T11:30:00Z",
-    "deadline": "2024-05-23T11:30:00Z"
+    "salary": 90000
   },
   {
     "user": "bc64bc7a-10b3-4c62-a0b3-114c2ee779a6",

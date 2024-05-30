@@ -1,7 +1,7 @@
 import morgan from 'morgan';
-import { logger } from '@/services/logger.service';
+import { logger } from '@/lib/logger.js';
 import { Request } from 'express';
-import { redactSensitiveInfo } from '@/utils/redactSensitiveInfo';
+import { redactSensitiveInfo } from '@/helpers/redactSensitiveInfo.js';
 
 /**
  * Creates a middleware function that logs HTTP requests using the Morgan library.
@@ -45,12 +45,12 @@ const morganMiddleware = () => {
         user_agent: ':user-agent',
       },
       null,
-      2
+      2,
     ),
     // Options: in this case, I overwrote the stream and the skip logic.
     // Skip logging if the environment is not development.
     // Otherwise, log the whole request to the console
-    { stream, skip }
+    { stream, skip },
   );
 };
-export { morganMiddleware };
+export default morganMiddleware;

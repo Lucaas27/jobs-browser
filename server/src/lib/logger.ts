@@ -5,6 +5,11 @@ const isDevelopment = () => {
   return env === 'development';
 };
 
+const isTest = () => {
+  const env = process.env.NODE_ENV;
+  return env === 'test';
+};
+
 // Define severity levels.
 // With them, we can create log files,
 // see or hide levels based on the running ENV.
@@ -21,7 +26,7 @@ export const levels = {
 // if the server was run in development mode; otherwise,
 // if it was run in production, show only warn and error messages.
 const level = () => {
-  return isDevelopment() ? 'debug' : 'http';
+  return isDevelopment() ? 'debug' : isTest() ? 'error' : 'http';
 };
 
 // Define different colors for each level.
@@ -45,7 +50,7 @@ const format = winston.format.combine(
   // Tell Winston that the logs must be colored
   winston.format.colorize({ all: true }),
   // Define the format of the message showing the timestamp, the level and the message
-  winston.format.printf((info) => `${info.timestamp} ${info.level}: ${info.message}`)
+  winston.format.printf((info) => `${info.timestamp} ${info.level}: ${info.message}`),
 );
 
 // Create the logger instance that has to be exported
@@ -55,19 +60,20 @@ const logger = winston.createLogger({
   levels,
   format,
   defaultMeta: { service: 'user-service' },
-  transports: isDevelopment()
-    ? [
-        // Allow the use the console to print the messages
-        new winston.transports.Console(),
-      ]
-    : [
-        // Allow the use the console to print the messages
-        new winston.transports.Console(),
-        // Allow to print all the error level messages inside the error.log file
-        new winston.transports.File({
-          filename: 'src/logs/application.log',
-        }),
-      ],
+  transports:
+    isDevelopment() || isTest()
+      ? [
+          // Allow the use the console to print the messages
+          new winston.transports.Console({ silent: isTest() }),
+        ]
+      : [
+          // Allow the use the console to print the messages
+          new winston.transports.Console(),
+          // Allow to print all the error level messages inside the error.log file
+          new winston.transports.File({
+            filename: 'logs/application.log',
+          }),
+        ],
 });
 
 export { logger };

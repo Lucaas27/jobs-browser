@@ -22,4 +22,4 @@ const corsOptions: cors.CorsOptions = {
   //   allowedHeaders: ['Content-Type', 'Authorization'], // Specifies the allowed headers for CORS requests
 };
 
-export { corsOptions };
+export default corsOptions;
