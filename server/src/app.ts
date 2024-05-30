@@ -1,26 +1,31 @@
+import dotenv from 'dotenv';
 import cors from 'cors';
-import express, { Express, Request, Response } from 'express';
-import { morganMiddleware } from '@/middlewares/morgan.middleware';
-import { jobsRouter } from '@/routes/jobs.route';
-import { connDB } from '@/config/connDB';
-import { errorHandler } from '@/middlewares/errorHandler.middleware';
-import { corsOptions } from '@/config/cors';
-import { notFound } from '@/middlewares/notFound.middleware';
+import express, { Express } from 'express';
+import morganMiddleware from '@/middlewares/morgan.middleware.js';
+import { errorHandler } from '@/middlewares/errorHandler.middleware.js';
+import corsOptions from '@/config/cors.js';
+import notFound from '@/middlewares/notFound.middleware.js';
+import api from '@/api/index.js';
+import { MongoService } from '@/interfaces/MongoService.js';
+dotenv.config({ path: `.env.${process.env.NODE_ENV || 'development'}.local` });
 
-// Connect to DB
-connDB();
+const initApp = (database: MongoService) => {
+  // Instantiate app
+  const app: Express = express();
 
-// Initialize app
-const app: Express = express();
+  // Connect to MongoDB
+  database.connect();
 
-// Middleware and Routers
-app
-  .use(cors(corsOptions))
-  .use(express.json())
-  .use(express.urlencoded({ extended: true, limit: '30mb' }))
-  .use(morganMiddleware())
-  .use(`/api/${process.env.API_VERSION || 'v1'}/jobs`, jobsRouter)
-  .use('*', notFound)
-  .use(errorHandler);
+  // Middleware and Routers
+  app
+    .use(cors(corsOptions))
+    .use(express.json())
+    .use(morganMiddleware())
+    .use(`/api/${process.env.API_VERSION || 'v1'}`, api)
+    .use(notFound) // Catch 404 errors
+    .use(errorHandler); // Custom error handler
 
-export default app;
+  return app;
+};
+
+export default initApp;
