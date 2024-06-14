@@ -17,17 +17,16 @@ describe('POST /jobs endpoints', () => {
   });
   describe(`POST request to /api/${process.env.API_VERSION || 'v1'}/jobs/new`, async () => {
     const newJob = {
-      title: 'Test API',
-      description: 'We are testing the API.',
+      title: 'Software Engineer',
+      description: 'We are looking for a skilled Software Engineer to join our development team.',
       email: 'jobs@example.com',
-      address: '56 high street',
-      company: 'SuccessWorks Ltd.',
-      industry: ['Customer Service'],
-      jobType: 'Full-time',
-      minEducation: "Bachelor's Degree",
-      positionsAvailable: 1,
-      experience: '2 Year - 5 Years',
-      salary: 90000,
+      address: '456 High Street, Manchester',
+      industry: ['information technology'],
+      jobType: 'full-time',
+      minEducation: "bachelor's degree",
+      positionsAvailable: 2,
+      experience: '2 years - 5 years',
+      salary: 95000,
     };
 
     it('should return 201 if the request is successful', async () => {
@@ -151,21 +150,6 @@ describe('POST /jobs endpoints', () => {
       expect(res.header['content-type']).toMatch(/application\/json/);
     });
 
-    it('should return 400 and a validation error if the company field is empty', async () => {
-      const invalidJob = { ...newJob, company: '' };
-      const res = await request(app)
-        .post(`/api/${process.env.API_VERSION || 'v1'}/jobs/new`)
-        .set('Accept', 'application/json')
-        .send(invalidJob);
-
-      expect(res.status).toBe(400);
-      expect(validateSchema(ErrorResponseSchema, res.body)).toBe(true);
-      expect(res.body.success).toBe(false);
-      expect(mockedMongoService.createDocument).toHaveBeenCalledTimes(0);
-      expect(res.body.error.name).toMatch(/ValidationError/);
-      expect(res.body.error.message[0]).toMatch(/Please add Company name/);
-      expect(res.header['content-type']).toMatch(/application\/json/);
-    });
     it('should return 400 and a validation error if the industry field does not have a correct value', async () => {
       const invalidJob = { ...newJob, industry: ['test'] };
       const res = await request(app)

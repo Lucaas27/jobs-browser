@@ -102,10 +102,12 @@ class MongoDBService implements MongoService {
   async getDocumentById<T extends Document>(collectionName: string, id: string): Promise<WithId<T>[] | never[]> {
     try {
       const db = this.getDB();
+
       const result = await db.collection<T>(collectionName).findOne({ _id: new ObjectId(id) } as Filter<T>);
       if (!result) {
         return [];
       }
+
       return [result];
     } catch (error) {
       logger.error(`Failed to retrieve document with ID "${id}": ${error.message || error}`);
@@ -126,6 +128,7 @@ class MongoDBService implements MongoService {
   ): Promise<never[] | InsertOneResult<T>[]> {
     try {
       const db = this.getDB();
+
       const result = await db
         .collection<T>(collectionName)
         .insertOne({ ...document, createdAt: new Date(), updatedAt: new Date() });
@@ -156,13 +159,10 @@ class MongoDBService implements MongoService {
   ): Promise<WithId<T>[]> {
     try {
       const db = this.getDB();
+      const updateDoc = { $set: { ...document, updatedAt: new Date() } };
       const result = await db
         .collection<T>(collectionName)
-        .findOneAndUpdate(
-          { _id: new ObjectId(id) } as Filter<T>,
-          { $set: { ...document, updatedAt: new Date() } },
-          { returnDocument: 'after' },
-        );
+        .findOneAndUpdate({ _id: new ObjectId(id) } as Filter<T>, updateDoc, { returnDocument: 'after' });
 
       if (!result) {
         return [];

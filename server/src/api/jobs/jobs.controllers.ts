@@ -2,8 +2,8 @@ import 'express-async-errors';
 import { Request, Response } from 'express';
 import { CustomAPIError } from '@/middlewares/errorHandler.middleware.js';
 import { APIResponse } from '@/interfaces/APIResponse.js';
-import { Job, JobIdParam } from '@/api/jobs/jobs.model.js';
-import mongo from '@/services/mongo.service.js';
+import JobSchema, { Job, JobIdParam } from '@/api/jobs/jobs.model.js';
+import mongoService from '@/services/mongo.service.js';
 import slugify from 'slugify';
 import { validateAndGeocodeAddress } from '@/lib/geocoder.js';
 
@@ -17,7 +17,7 @@ import { validateAndGeocodeAddress } from '@/lib/geocoder.js';
  * @access Public
  */
 export const getJobs = async (req: Request, res: Response<APIResponse>): Promise<void> => {
-  const jobs = await mongo.getDocuments<Job>('jobs');
+  const jobs = await mongoService.getDocuments<Job>('jobs');
 
   res.status(200).json({
     success: true,
@@ -37,7 +37,7 @@ export const getJobs = async (req: Request, res: Response<APIResponse>): Promise
  * @access Private
  */
 export const getJob = async (req: Request<JobIdParam>, res: Response<APIResponse>): Promise<void> => {
-  const job = await mongo.getDocumentById<Job>('jobs', req.params.id);
+  const job = await mongoService.getDocumentById<Job>('jobs', req.params.id);
 
   if (!job.length) {
     throw new CustomAPIError(`Resource id ${req.params.id} does not exist`, 404);
@@ -76,7 +76,7 @@ export const createJob = async (req: Request<object, APIResponse, Job>, res: Res
     throw new CustomAPIError(`Failed to create resource. Invalid address provided.`, 400);
   }
 
-  const jobCreated = await mongo.createDocument<Job>('jobs', req.body);
+  const jobCreated = await mongoService.createDocument<Job>('jobs', req.body);
 
   if (!jobCreated.length) {
     throw new CustomAPIError(`Failed to create resource.`, 500);
@@ -102,7 +102,15 @@ export const updateJob = async (
   req: Request<JobIdParam, APIResponse, Partial<Job>>,
   res: Response<APIResponse>,
 ): Promise<void> => {
-  const updatedJob = await mongo.updateDocument<Job>('jobs', req.params.id, req.body);
+  if (!req.body) {
+    throw new CustomAPIError(`Failed to update resource. No data provided.`, 400);
+  }
+
+  // Validate req.body against JobSchema
+  const partialSchema = JobSchema.partial();
+  const validatedData = partialSchema.parse(req.body);
+
+  const updatedJob = await mongoService.updateDocument<Job>('jobs', req.params.id, validatedData);
 
   if (!updatedJob.length) {
     throw new CustomAPIError(`Resource ${req.params.id} could not be found`, 404);
@@ -125,7 +133,7 @@ export const updateJob = async (
  * @access Private
  */
 export const deleteJob = async (req: Request<JobIdParam>, res: Response<APIResponse>): Promise<void> => {
-  const deletedJob = await mongo.deleteDocument<Job>('jobs', req.params.id);
+  const deletedJob = await mongoService.deleteDocument<Job>('jobs', req.params.id);
   if (!deletedJob.length) {
     throw new CustomAPIError(`Resource ${req.params.id} does not exist`, 404);
   }
