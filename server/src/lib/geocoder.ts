@@ -37,4 +37,4 @@ const validateAndGeocodeAddress = async (address: Job['address']) => {
   };
 };
 
-export { geocoder, validateAndGeocodeAddress };
+export { validateAndGeocodeAddress };
