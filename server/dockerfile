@@ -12,7 +12,7 @@ CMD ["npm", "run", "dev"]
 FROM node:22-alpine as build
 WORKDIR /app
 COPY package*.json .
-RUN npm ci
+RUN npm install
 COPY . .
 RUN npm run build
 # Debugging step to list contents of /app to verify /app/dist exists
