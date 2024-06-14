@@ -14,14 +14,15 @@ WORKDIR /app
 COPY package*.json .
 RUN npm ci
 COPY . .
-CMD ["npm", "run", "build"]
+RUN npm run build
+# Debugging step to list contents of /app to verify /app/dist exists
+RUN ls -l /app
+
 
 
 # Production specific setup
 FROM node:22-alpine as prod
 WORKDIR /app
-COPY package*.json ./
-RUN npm ci
 COPY --from=build /app/dist dist
 EXPOSE 5000
 CMD ["npm", "run", "start"]
