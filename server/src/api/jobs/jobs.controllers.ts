@@ -2,7 +2,7 @@ import 'express-async-errors';
 import { Request, Response } from 'express';
 import { CustomAPIError } from '@/middlewares/errorHandler.middleware.js';
 import { APIResponse } from '@/interfaces/APIResponse.js';
-import { Job, JobIdParam } from '@/api/jobs/jobs.model.js';
+import JobSchema, { Job, JobIdParam } from '@/api/jobs/jobs.model.js';
 import mongoService from '@/services/mongo.service.js';
 import slugify from 'slugify';
 import { validateAndGeocodeAddress } from '@/lib/geocoder.js';
@@ -102,7 +102,15 @@ export const updateJob = async (
   req: Request<JobIdParam, APIResponse, Partial<Job>>,
   res: Response<APIResponse>,
 ): Promise<void> => {
-  const updatedJob = await mongoService.updateDocument<Job>('jobs', req.params.id, req.body);
+  if (!req.body) {
+    throw new CustomAPIError(`Failed to update resource. No data provided.`, 400);
+  }
+
+  // Validate req.body against JobSchema
+  const partialSchema = JobSchema.partial();
+  const validatedData = partialSchema.parse(req.body);
+
+  const updatedJob = await mongoService.updateDocument<Job>('jobs', req.params.id, validatedData);
 
   if (!updatedJob.length) {
     throw new CustomAPIError(`Resource ${req.params.id} could not be found`, 404);
