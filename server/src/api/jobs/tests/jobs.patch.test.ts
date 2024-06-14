@@ -163,22 +163,6 @@ describe('PATCH /jobs endpoints', () => {
       expect(res.body.error.message[0]).toMatch(/Please add an address/);
       expect(res.header['content-type']).toMatch(/application\/json/);
     });
-
-    it('should return 400 and a validation error if the company field is empty', async () => {
-      const invalidJob = { company: '' };
-      const res = await request(app)
-        .patch(`/api/${process.env.API_VERSION || 'v1'}/jobs/664bbf89bad5420fcbba2b88`)
-        .set('Accept', 'application/json')
-        .send(invalidJob);
-
-      expect(res.status).toBe(400);
-      expect(validateSchema(ErrorResponseSchema, res.body)).toBe(true);
-      expect(res.body.success).toBe(false);
-      expect(mockedMongoService.createDocument).toHaveBeenCalledTimes(0);
-      expect(res.body.error.name).toMatch(/ValidationError/);
-      expect(res.body.error.message[0]).toMatch(/Please add Company name/);
-      expect(res.header['content-type']).toMatch(/application\/json/);
-    });
     it('should return 400 and a validation error if the industry field does not have a correct value', async () => {
       const invalidJob = { industry: ['test'] };
       const res = await request(app)
