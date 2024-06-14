@@ -1,4 +1,4 @@
-import ErrorResponse from '@/interfaces/ErrorResponse.js';
+import { ErrorResponse } from '@/interfaces/ErrorResponse.js';
 import { CustomAPIError } from '@/middlewares/errorHandler.middleware.js';
 import { NextFunction, Request, Response } from 'express';
 

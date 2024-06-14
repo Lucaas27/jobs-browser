@@ -1,5 +1,5 @@
 # Development specific setup
-FROM node:20-alpine as dev
+FROM node:22-alpine as dev
 ENV NODE_ENV=development
 WORKDIR /app
 COPY package*.json .
@@ -9,20 +9,22 @@ EXPOSE 5000
 CMD ["npm", "run", "dev"]
 
 # build
-FROM node:20-alpine as build
+FROM node:22-alpine as build
 WORKDIR /app
 COPY package*.json .
-RUN npm ci
+RUN npm install
 COPY . .
-CMD ["npm", "run", "build"]
+RUN npm run build
+# Debugging step to list contents of /app to verify /app/dist exists
+RUN ls -l /app
+
 
 
 # Production specific setup
-FROM node:20-alpine as prod
-ENV NODE_ENV=production
+FROM node:22-alpine as prod
 WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
+COPY package*.json .
+RUN npm install
 COPY --from=build /app/dist ./dist
 EXPOSE 5000
 CMD ["npm", "run", "start"]
